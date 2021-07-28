@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap');
+
+
+*{
+	margin: 0;
+	border: 0;
+	box-sizing: border-box;
+}
+
+body{
+	font-family: 'Merriweather', serif;
+	text-align: center;
+		background-image: linear-gradient(to right, #5859A1, #18192E);
+	font-size: 18px;
+}
+	
+.main{
+	width: 100%;
+	height: 100vh;
+    display: flex;
+	justify-content: center;
+    flex-direction: column;
+    align-items: center;
+	
+}
+
+.menu-opcoes{
+	width: 100%;
+	height: 10vh;
+	 display: flex;
+	justify-content:flex-end;
+	align-items: center;
+}
+.menu{
+	width: 50%;
+	height: 10vh;
+    display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+
+	
+}
+.menu a{
+		text-decoration: none;
+}
+
+.opcoes{
+	color: white;
+	list-style: none;
+	cursor: pointer;
+}
+
+.opcoes:hover{
+	color: #CECEF7;
+}
+
+.conteudo-do-site{
+	width: 85%;
+	height: 65vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 24px;
+}
+.option{
+	width: 30%;	
+	
+	cursor: pointer;
+
+}
+.option a{
+	text-decoration: none;
+}
+
+
+.conteudo{
+	height: 45vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-top: 15px;
+	color: white; 
+}
+.conteudo:hover{
+	border: 1px solid blue;
+	background-color: rgba(29,31,142,0.4);
+}
+
+.conteudo figcaption{
+   padding: 20px;
+}
+
+.azure{
+	position: absolute;
+	top: 15px;
+	left: 40px;
+	cursor: pointer;
+}
+.dois{
+	position: absolute;
+	top: 30px;
+	right: 60px;
+	cursor: pointer;
+}
+.dois a {
+	text-decoration: none;
+	color: white;
+}
+
+.sobreNos{
+	width: 100%;
+	height: 35vh;
+	border-bottom: 2px solid rgb(5, 47, 18);
+	color:rgb(255, 255, 255);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.redes-Sociais{
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: -24px;
+}
+.imagens-redes{
+	display: flex;
+	flex-direction: row;
+	width: 140px;
+	justify-content: space-between;
+	margin-top: 25px;
+	
+}
+.redes-Sociais p {
+	color: white;
+	width: 250px;
+	
+}

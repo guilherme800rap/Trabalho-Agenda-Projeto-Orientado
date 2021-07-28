@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: arquivoJS.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: arquivoJS.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>  
+		var bancoDeDados = openDatabase('agendaTelefonica','1.0','BD para projeto Orientado',1024*10248*2);
+		bancoDeDados.transaction(function(tx){
+			tx.executeSql('create table if not exists agendas(id INTEGER not null primary key AUTOINCREMENT, nome VARCHAR not null,  telefoneResidencial VARCHAR not null,  telefoneCelular VARCHAR not null,  email VARCHAR not null, redeSocial VARCHAR not null)');
+		})
+
+	/**
+	 * Esta Função registra um usuário no banco de dados
+	 * @param {String} dados 	Vetor de Strings que receberá os dados enviados pelo usuário
+	 */
+	function inserirDados(dados){
+        bancoDeDados.transaction(function(tx){
+        	tx.executeSql('insert into agendas(nome, telefoneResidencial, telefoneCelular, email, redeSocial) values(?,?,?,?,?)',dados, 
+        		function(resultado){
+               		alert('Dados inseridos!!');
+        		},
+        		function(erro){
+        			alert('ERROR');
+        	})
+        });
+	}
+
+	/**
+	 * Função que pega os dados do usuário e mostra na página de visualização
+	 * @param {} 
+	 */
+	function pegarDados(){
+		bancoDeDados.transaction(function(tx){
+			tx.executeSql('SELECT * FROM agendas',[],
+			function(tx,resultado){
+              var tamanho = resultado.rows.length;
+                       var i;
+                       var texto;
+                       for(i = 0; i &lt; tamanho; i++ ){
+                        texto = '&lt;div class="vers">Nome: &lt;span class="dadosDoUsuario">'+resultado.rows.item(i).nome+
+                        '&lt;/span>Telefone Residencial: &lt;span class="dadosDoUsuario">'+resultado.rows.item(i).telefoneResidencial+'&lt;/span>Telefone Celular: &lt;span class="dadosDoUsuario">'+resultado.rows.item(i).telefoneCelular + '&lt;/span>Email:  &lt;span class="dadosDoUsuario">'+resultado.rows.item(i).email +'&lt;/span>Rede Social: &lt;span class="dadosDoUsuario">'+resultado.rows.item(i).redeSocial+ '&lt;/span>&lt;/div>';
+                        document.querySelector("#registros").innerHTML += texto; 
+
+                       } 
+			},
+			function(erro) {
+				console.log("erro ao listar agendas");
+			})
+		});
+
+	}
+	/**
+	 * Função que pega os novos dados inseridos pelo usuário
+	 * @param {} 
+	 */
+	function novosDados(){	
+    
+		let html = `
+			 &lt;input id="nome" type="text" placeholder="Nome" />
+			 &lt;input id="telefoneResidencial" type="text" placeholder="Telefone Residencial" />
+			 &lt;input id="telefoneCelular" type="text" placeholder="Telefone Celular" />
+			 &lt;input id="email" type="text" placeholder="Email" />
+			 &lt;input id="redeSocial" type="text" placeholder="Rede Social" />
+			 &lt;br>
+			 &lt;button  id="btn-enviar-alteracao" type="submit">Salvar alterações&lt;/button>
+
+		`;
+		document.querySelector("#registros").innerHTML = html;
+
+		$("#btn-enviar-alteracao").click(function(){
+			let nome2 = $('#nome').val();
+			let telefoneResidencial2 = $('#telefoneResidencial').val();
+			let telefoneCelular2 = $('#telefoneCelular').val();
+			let email2 = $('#email').val();
+			let redeSocial2 = $('#redeSocial').val();
+			let pesquisaNome = $('#pesquisaNome').val();
+			let nome = pesquisaNome;
+			alteraAgenda(nome,nome2,telefoneResidencial2,telefoneCelular2,email2,redeSocial2);
+		});
+
+
+}	
+	/**
+	 * Pega os novos dados inseridos pelo usuário e altera no banco de dados
+	 * @param {String} nome Mudará o banco de dados de acordo com o nome passado pelo usuário
+	 */
+
+	function editaDados(nome){
+		try{
+			bancoDeDados.transaction(function(tx){
+			tx.executeSql('SELECT * FROM agendas WHERE nome = ?',[nome],
+			function(tx,resultado){
+             	 var tamanho = resultado.rows.length;
+                    var i;
+                    var texto;
+                    for(i = 0; i &lt; tamanho; i++ ){
+                       	item = resultado.rows.item(i);
+	                    texto = '&lt;div class="dadosUsuario">&lt;div class="item">Nome:'+ item['nome'] +'&lt;/div>'+
+	                    '&lt;div class="item">Telefone Residencial: '+item['telefoneResidencial'] +'&lt;/div>'+
+	                    '&lt;div class="item">Telefone Celular:  '+ item['telefoneCelular']+ '&lt;/div>'+
+						'&lt;div class="item">Email:'+item['email'] +'&lt;/div>'+
+						'&lt;div class="item">Rede Social:'+ item['redeSocial']+ '&lt;/div>&lt;/div>' +
+						'&lt;br>&lt;br>&lt;br> &lt;a id="excluir-Agendas" href="#" onClick="excluirAgendas('+item['id']+')"> Excluir Agenda &lt;/a> &lt;br>'+
+						'&lt;button id="btn-mostra-alteracao" onclick="novosDados()" type="submit">Fazer alteração&lt;/button>';
+	                    document.querySelector("#local-Recebe-Novos").innerHTML = texto;
+                    }                
+			},
+			)
+			
+		});
+		}catch(erro){alert(erro)}
+	}
+
+   
+	/**
+	 * Pega os novos dados inseridos pelo usuário e altera no banco de dados
+	 * @param {String} dados Alterará a agenda com os novos dados passados
+	 */
+
+	function alteraAgenda(nome,nome2,telefoneResidencial2,telefoneCelular2,email2,redeSocial2){
+    	bancoDeDados.transaction(function(tx){
+    		tx.executeSql('UPDATE agendas SET nome = ?, telefoneResidencial = ?, telefoneCelular = ?, email = ?, redeSocial = ? WHERE nome = ?',[nome2,telefoneResidencial2,telefoneCelular2,email2,redeSocial2, nome],
+    			function(tx,resultado){
+    				alert('SUA AGENDA FOI ALTERADA COM SUCESSO!!!');
+    			},
+    			function(erro){
+    				console.log("Erro, tente novamente");
+    			});
+
+    	})
+    }
+	/**
+	 * Função que excluirá a agenda do usuário
+	 * @param {number} id Excluirá a agenda de acordo com o id que será pego na função edita dados
+	 */
+    function excluirAgendas(id){
+        bancoDeDados.transaction(function(tx){
+
+            tx.executeSql('DELETE FROM agendas WHERE id = ? ',[id],
+            function(tx,resultado){
+          		alert('Excluido com Sucesso');                           
+            },
+            function(erro) {
+                console.log("Erro ao deletar agendas, tente novamente");
+            });
+        });
+
+    }
+
+ 
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#alteraAgenda">alteraAgenda</a></li><li><a href="global.html#editaDados">editaDados</a></li><li><a href="global.html#excluirAgendas">excluirAgendas</a></li><li><a href="global.html#inserirDados">inserirDados</a></li><li><a href="global.html#novosDados">novosDados</a></li><li><a href="global.html#pegarDados">pegarDados</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Jul 28 2021 17:20:14 GMT-0300 (Brasilia Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

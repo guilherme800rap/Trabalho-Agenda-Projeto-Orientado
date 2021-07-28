@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="cadastrar.css">
+    <title>Cadastrar Usuário</title>
+ 
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="arquivoJS.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $("#btn-enviar").click(function(){
+            let nome = $('#nome').val();
+            let telefoneResidencial = $('#telefoneResidencial').val();
+            let telefoneCelular = $('#telefoneCelular').val();
+            let email = $('#email').val();
+            let redeSocial = $('#redeSocial').val();
+
+            let dados = [nome,telefoneResidencial,telefoneCelular,email,redeSocial];
+            inserirDados(dados);
+
+        });
+    });
+    </script>
+
+</head>
+
+<body>
+    
+    <section class="conteudo">
+        <section class="main">
+            <div class="titulo">
+               <h1>CRIAR</h1>
+            </div>
+            <div class="voltar">
+                <a href="paginaInicial.html"><img src="imagens/seta.png" width="50" height="50"></a>
+            </div>
+            <div class="avancar">
+                <a href="editar.html"><img src="imagens/setaDireita.png" width="50" height="50"></a>
+            </div>
+
+            <div class="enviar-Registros">
+                <div class="dados-enviar">
+                    <input id="nome" type="text" placeholder="Nome" />
+                </div>
+
+                <div class="dados-enviar">
+                      <input type="text" id="telefoneResidencial" placeholder="Telefone Residencial" />  
+                </div>
+
+                <div class="dados-enviar">
+                      <input type="text" id ="telefoneCelular" placeholder="Telefone Celular" />
+                </div>
+
+                <div class="dados-enviar">
+                      <input id="email" type="email" placeholder="Email">
+                </div>
+
+                <div class="dados-enviar">
+                      <input type="text" id="redeSocial" placeholder="Rede Social" />
+                </div>
+                <button  id="btn-enviar" type="submit">ENVIAR DADOS</button>
+            </div>
+        </section>
+    </section>
+
+
+</body>
+</html>

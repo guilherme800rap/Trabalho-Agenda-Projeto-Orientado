@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="ver.css">
+    <title>Ver Dados</title>
+
+    <script src="arquivoJS.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            pegarDados();         
+        });  
+
+    </script>
+
+</head>
+
+<body>
+    
+    <section class="conteudo">
+        <section class="main">
+            <div class="voltar">
+                <a href="editar.html"><img src="imagens/seta.png" width="50" height="50"></a>
+            </div>
+
+            <div class="avancar">
+                <a href="paginaInicial.html"><img src="imagens/setaDireita.png" width="50" height="50"></a>
+            </div>
+            <div class="titulo">
+               <h1>Agendas</h1>
+            </div>
+
+            <div class="listaDeAgendas">
+                <div id="registros"></div>
+            </div>
+
+        </section>
+    </section>
+    
+
+</body>
+</html>
